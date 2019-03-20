@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+struct Node
+{
+	int data;
+	Node* next;
+};
+class Queue 
+{
+	Node *rear;
+	int init[5] = { 1,2,3,4,5 };
+public: Queue() 
+	{
+		Node *p,*head;
+		Node *q = new Node;
+		head = q;
+		for (int i = 0; i < 4; i++) 
+		{
+			q->data = init[i];
+			p = q;
+			q = new Node;
+			p->next = q;
+		}
+		q->data = init[4];
+		rear = q;
+		q->next = head;
+	}
+public: void output() 
+	{
+		Node *x;
+		x = rear->next;
+		cout << "1表示原队列队头，5表示原队列队尾" << endl;
+		do
+		{
+			cout << x->data;
+			x = x->next;
+		} while (x->data != rear->next->data);
+		cout << endl;
+	}
+		void AfterOutput() 
+		{
+			int i;
+			cout << "请选择：1表示出列，2表示在队尾插入"<<endl;
+			cin >> i;
+			if (i == 1)
+			{
+				inserthead();
+			}
+			else
+			{
+				inserttail();
+			}
+			output();
+		}
+		void inserthead() 
+		{
+			Node *p;
+			p = rear->next;
+			rear->next = p->next;
+			delete p;
+		}
+		void inserttail() 
+		{
+			Node *node;
+			node = new Node;
+			cout << "请输入要插入的数字："<<endl;
+			int in;
+			cin >> in;
+			node->data = in;
+			node->next = rear->next;
+			rear->next = node;
+			rear = node;
+		}
+
+};
+int main() 
+{
+	Queue queue;
+	queue.output();
+	queue.AfterOutput();
+	system("pause");
+}
